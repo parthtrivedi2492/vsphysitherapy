@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book Online &amp; Contact | VS Physiotherapy, Cooksville Mississauga</title>
+<meta name="description" content="Book physiotherapy, pelvic health or sports rehab with Sweni Shah at VS Physiotherapy in Cooksville, Mississauga. Call (416) 858-6014 or request an appointment online. Free parking, 5 min from Cooksville GO.">
+<meta name="theme-color" content="#131E17">
+<link rel="icon" href="vs_physio_design_assets/logo_app_icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script>document.documentElement.classList.add('has-js');</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<div class="announce" aria-label="Clinic announcements">
+  <div class="announce__track">
+    <span><b>◆</b> Typical wait for a first assessment: 48 hours</span>
+    <span><b>◆</b> Free 15-minute discovery calls</span>
+    <span><b>◆</b> Direct billing to 20+ Canadian insurers</span>
+    <span><b>◆</b> Free parking · 5 min from Cooksville GO</span>
+    <span aria-hidden="true"><b>◆</b> Typical wait for a first assessment: 48 hours</span>
+    <span aria-hidden="true"><b>◆</b> Free 15-minute discovery calls</span>
+    <span aria-hidden="true"><b>◆</b> Direct billing to 20+ Canadian insurers</span>
+    <span aria-hidden="true"><b>◆</b> Free parking · 5 min from Cooksville GO</span>
+  </div>
+</div>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="index.html" aria-label="VS Physiotherapy — home">
+      <img src="vs_physio_design_assets/logo_app_icon.png" alt="">
+      <span class="logo__txt"><b>VS Physiotherapy</b><i>Mississauga · GTA</i></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">Clinic</a>
+      <a href="about.html#team">Your Physio</a>
+      <a href="index.html#coverage">Areas</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <div class="hdr__cta">
+      <a class="callchip" href="tel:+14168586014"><span class="ic"><i data-lucide="phone"></i></span>416 · 858 · 6014</a>
+      <a class="btn" href="#book" data-cursor="Book" data-magnetic>Book now</a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span class="burger__bars"><i></i><i></i><i></i></span><span class="burger__label">Menu</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="phero">
+  <div class="wrap">
+    <p class="crumb"><a href="index.html">Home</a> — Contact</p>
+    <h1 data-split>Let's get you booked in</h1>
+    <p class="lead">Send a request below and we'll confirm within one business day — usually inside the hour. Prefer a human right now? Call any time we're open.</p>
+    <p class="openflag" data-openflag style="margin-top:1.4rem"><span class="d"></span><span data-openflag-text>Checking hours…</span></p>
+  </div>
+</section>
+
+<section class="sec" id="book">
+  <div class="wrap split" style="align-items:start">
+
+    <div data-anim="up">
+      <form class="panel" data-validate novalidate>
+        <div class="done" role="status">
+          <b>Request received.</b>
+          Sweni will confirm your appointment by phone or email within one business day. If it's urgent, call (416) 858-6014 and we'll sort it out now.
+        </div>
+
+        <p class="label">Appointment request</p>
+        <h2 style="font-size:clamp(1.6rem,2.6vw,2.1rem);margin:.8rem 0 1.6rem">Tell us what's going on</h2>
+
+        <div class="frow">
+          <div class="f">
+            <label for="fn">First name <em>*</em></label>
+            <input id="fn" name="firstName" type="text" autocomplete="given-name" required>
+            <span class="err">Please enter your first name.</span>
+          </div>
+          <div class="f">
+            <label for="ln">Last name <em>*</em></label>
+            <input id="ln" name="lastName" type="text" autocomplete="family-name" required>
+            <span class="err">Please enter your last name.</span>
+          </div>
+        </div>
+
+        <div class="frow">
+          <div class="f">
+            <label for="em">Email <em>*</em></label>
+            <input id="em" name="email" type="email" autocomplete="email" required>
+            <span class="err">Please enter a valid email address.</span>
+          </div>
+          <div class="f">
+            <label for="ph">Phone <em>*</em></label>
+            <input id="ph" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9\s\(\)\+\-]{10,}" required>
+            <span class="err">Please enter a valid phone number.</span>
+          </div>
+        </div>
+
+        <div class="f">
+          <label for="svc">Service <em>*</em></label>
+          <select id="svc" name="service" required>
+            <option value="">Select a service…</option>
+            <option>Free 15-minute discovery call</option>
+            <option>Physiotherapy</option>
+            <option>Pelvic floor physiotherapy</option>
+            <option>Sports rehabilitation</option>
+            <option>Acupuncture / dry needling</option>
+            <option>Custom orthotics &amp; gait scan</option>
+            <option>Motor vehicle accident (MVA) claim</option>
+            <option>WSIB / workplace injury</option>
+          </select>
+          <span class="err">Please choose a service.</span>
+        </div>
+
+        <div class="f">
+          <label>Preferred time of day</label>
+          <div class="pills">
+            <input type="radio" id="t1" name="slot" value="early"><label for="t1">Early 7:30–10</label>
+            <input type="radio" id="t2" name="slot" value="midday"><label for="t2">Midday 10–2</label>
+            <input type="radio" id="t3" name="slot" value="afternoon"><label for="t3">Afternoon 2–5</label>
+            <input type="radio" id="t4" name="slot" value="evening"><label for="t4">Evening 5–8</label>
+            <input type="radio" id="t5" name="slot" value="saturday"><label for="t5">Saturday</label>
+          </div>
+        </div>
+
+        <div class="frow">
+          <div class="f">
+            <label for="dt">Preferred date</label>
+            <input id="dt" name="date" type="date">
+          </div>
+          <div class="f">
+            <label for="ins">Insurance provider</label>
+            <input id="ins" name="insurer" type="text" placeholder="e.g. Sun Life, WSIB, or none">
+          </div>
+        </div>
+
+        <div class="f">
+          <label for="msg">What's bothering you?</label>
+          <textarea id="msg" name="message" placeholder="Where it hurts, how long it's been going on, and anything that makes it better or worse."></textarea>
+        </div>
+
+        <button class="btn btn--lg btn--block" type="submit" data-magnetic>Request appointment</button>
+        <p class="tiny" style="margin-top:1rem">This form is a front-end demo and does not transmit data — connect it to your booking system (Jane App, Cliniko) before launch. Please don't include sensitive medical details here; PHIPA-compliant intake happens in clinic.</p>
+      </form>
+    </div>
+
+    <div data-anim="up" data-delay="0.1">
+      <span class="numeral">02</span>
+      <p class="label" style="margin-top:1.3rem">Find us</p>
+      <h2 style="margin-top:.9rem">Cooksville, right off Hurontario</h2>
+      <p style="margin-top:1.1rem">Free surface parking that isn't a fight, step-free access from the lot, and a five-minute drive from Cooksville GO if you're coming in on the Milton or Lakeshore West line.</p>
+
+      <ul class="info" style="margin-top:2rem">
+        <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>220 Sage Ridge Blvd, Unit 12<br>Mississauga, ON L5B 3C9</span></span></li>
+        <li><span class="ic"><i data-lucide="phone"></i></span><span><b>Phone</b><a href="tel:+14168586014">(416) 858-6014</a></span></li>
+        <li><span class="ic"><i data-lucide="mail"></i></span><span><b>Email</b><a href="mailto:hello@vsphysiotherapy.ca">hello@vsphysiotherapy.ca</a></span></li>
+        <li><span class="ic"><i data-lucide="train-front"></i></span><span><b>Transit</b><span>5 min from Cooksville GO · MiWay 19 &amp; 26 at the door</span></span></li>
+      </ul>
+
+      <div class="panel" style="margin-top:2rem">
+        <p class="label">Opening hours</p>
+        <table class="hours" style="margin-top:1rem">
+          <tr data-day="1"><td>Monday</td><td>7:30 – 20:00</td></tr>
+          <tr data-day="2"><td>Tuesday</td><td>7:30 – 20:00</td></tr>
+          <tr data-day="3"><td>Wednesday</td><td>7:30 – 20:00</td></tr>
+          <tr data-day="4"><td>Thursday</td><td>7:30 – 20:00</td></tr>
+          <tr data-day="5"><td>Friday</td><td>7:30 – 18:00</td></tr>
+          <tr data-day="6"><td>Saturday</td><td>9:00 – 15:00</td></tr>
+          <tr data-day="0"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+
+      <div id="map" style="margin-top:2rem;height:380px" role="img" aria-label="Map showing the VS Physiotherapy clinic in Cooksville, Mississauga and its surrounding GTA service area"></div>
+      <p class="tiny" style="margin-top:.8rem;font-family:var(--mono);letter-spacing:.06em">Click the map to enable zoom</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark">
+  <div class="wrap">
+    <div class="head" data-anim="up" style="margin-bottom:2.5rem">
+      <span class="numeral" style="-webkit-text-stroke-color:var(--moss)">03</span>
+      <p class="label" style="margin-top:1.3rem">First visit</p>
+      <h2 style="margin-top:.9rem" data-split>What to expect when you walk in</h2>
+    </div>
+    <div class="local" data-anim="stagger">
+      <article class="local__card">
+        <span class="ic"><i data-lucide="clock"></i></span>
+        <span class="season">Step 01</span>
+        <h3>Arrive ten minutes early</h3>
+        <p>Or complete the intake form we email you and walk straight through to your room.</p>
+      </article>
+      <article class="local__card">
+        <span class="ic"><i data-lucide="shirt"></i></span>
+        <span class="season">Step 02</span>
+        <h3>Dress to move</h3>
+        <p>Shorts or leggings, a t-shirt and running shoes cover nearly every assessment we do.</p>
+      </article>
+      <article class="local__card">
+        <span class="ic"><i data-lucide="file-text"></i></span>
+        <span class="season">Step 03</span>
+        <h3>Bring the paperwork</h3>
+        <p>Insurance policy and certificate numbers, plus any imaging, surgical or specialist reports.</p>
+      </article>
+      <article class="local__card">
+        <span class="ic"><i data-lucide="clipboard-check"></i></span>
+        <span class="season">Step 04</span>
+        <h3>Leave with a plan</h3>
+        <p>You'll go home knowing the diagnosis, a realistic timeline and your first set of exercises.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec--sm" style="padding-bottom:clamp(3.5rem,7vw,6rem)">
+  <div class="wrap">
+    <div class="cta" data-anim="up">
+      <div>
+        <p class="label">Rather just talk?</p>
+        <h2 style="margin-top:1.1rem">You'll get Sweni, not a phone tree.</h2>
+        <p>Questions about coverage, wait times, or whether physiotherapy is even the right call? Ring the clinic and ask.</p>
+      </div>
+      <div class="cta__acts">
+        <a class="btn btn--paper btn--lg" href="tel:+14168586014" data-magnetic>Call (416) 858-6014</a>
+        <a class="btn btn--onDark btn--lg" href="mailto:hello@vsphysiotherapy.ca">Email the clinic</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="logo" href="index.html"><img src="vs_physio_design_assets/logo_app_icon.png" alt=""><span class="logo__txt"><b style="color:var(--paper)">VS Physiotherapy</b><i style="color:var(--sage-500)">Mississauga · GTA</i></span></a>
+        <p>Registered physiotherapy and rehabilitation in Cooksville, Mississauga — serving Peel, Halton, York and west Toronto since 2013.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#physio">Physiotherapy</a></li>
+          <li><a href="services.html#pelvic">Pelvic Health</a></li>
+          <li><a href="services.html#sports">Sports Rehab</a></li>
+          <li><a href="services.html#acu">Acupuncture</a></li>
+          <li><a href="services.html#orthotics">Custom Orthotics</a></li>
+          <li><a href="services.html#claims">MVA &amp; WSIB</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Clinic</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="about.html#team">Your physio</a></li>
+          <li><a href="services.html#fees">Fees</a></li>
+          <li><a href="index.html#coverage">Areas served</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>220 Sage Ridge Blvd, Unit 12<br>Mississauga, ON L5B 3C9</li>
+          <li><a href="tel:+14168586014">(416) 858-6014</a></li>
+          <li><a href="mailto:hello@vsphysiotherapy.ca">hello@vsphysiotherapy.ca</a></li>
+          <li>Mon–Thu 7:30–20:00<br>Fri 7:30–18:00 · Sat 9:00–15:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__wordmark" aria-hidden="true">VS Physiotherapy</div>
+    <div class="ftr__base">
+      <span>&copy; <span data-year>2026</span> VS Physiotherapy</span>
+      <span>Privacy · AODA Accessibility · Terms</span>
+      <span>Made in Mississauga, Ontario</span>
+    </div>
+  </div>
+</footer>
+
+<div class="bookbar">
+  <a class="btn btn--ghost" href="tel:+14168586014"><i data-lucide="phone"></i> Call</a>
+  <a class="btn" href="#book">Book appointment</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+<script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
