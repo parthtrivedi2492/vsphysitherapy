@@ -675,10 +675,19 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
     position: fixed; inset: var(--nav-h) 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
     background: var(--paper); padding: 1rem var(--gutter) 2rem; border-bottom: 1px solid var(--hair);
     box-shadow: var(--shadow-2); opacity: 0; transform: translateY(-10px); pointer-events: none;
-    transition: opacity .3s var(--ease), transform .3s var(--ease-out);
-    max-height: calc(100dvh - var(--nav-h)); overflow-y: auto;
+    /* visibility (not just opacity) so closed menu links leave the tab order
+       and the accessibility tree; delayed so the fade-out still animates. */
+    visibility: hidden;
+    transition: opacity .3s var(--ease), transform .3s var(--ease-out), visibility 0s .3s;
+    max-height: calc(100dvh - var(--nav-h));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
-  .menu.on { opacity: 1; transform: none; pointer-events: auto; }
+  .menu.on {
+    opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+    transition: opacity .3s var(--ease), transform .3s var(--ease-out), visibility 0s;
+  }
   .menu a { padding: .95rem .2rem; font-size: 1.1rem; font-family: var(--serif); border-bottom: 1px solid var(--hair); border-radius: 0; }
   .menu a::after { display: none; }
   .burger { display: flex; }
@@ -688,6 +697,18 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .logo__txt b { font-size: 1.15rem; }
   .logo img { width: 40px; height: 40px; border-radius: 12px; }
 }
+
+/* Backdrop behind the mobile menu: dims the page, catches outside taps, and
+   stops touches reaching content underneath. Sits below the header (z-90) so
+   the burger stays tappable, above the book bar (z-88). */
+.nav-backdrop {
+  position: fixed; inset: 0; z-index: 89;
+  background: rgba(19, 30, 23, .45);
+  opacity: 0; visibility: hidden; pointer-events: none; touch-action: none;
+  transition: opacity .3s var(--ease), visibility 0s .3s;
+}
+.nav-backdrop.on { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .3s var(--ease), visibility 0s; }
+@media (min-width: 861px) { .nav-backdrop { display: none; } }
 
 @media (max-width: 960px) {
   .hero__grid, .split, .proc { grid-template-columns: 1fr; }

@@ -65,6 +65,8 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   if (burger && menu) {
+    var backdrop = document.querySelector('.nav-backdrop');
+
     /* The header uses backdrop-filter, which makes it the containing block for
        the fixed-position menu. That means viewport units in CSS overshoot by the
        height of the announcement bar, so measure the real gap instead. */
@@ -74,33 +76,84 @@
     };
 
     var label = burger.querySelector('.burger__label');
+    var mqMobile = window.matchMedia('(max-width: 860px)');
+
+    /* Keep the collapsed menu out of the tab order and the accessibility tree.
+       `inert` is used rather than relying on the CSS visibility transition,
+       because that transition only resolves once a frame is painted. */
+    var syncInert = function () {
+      var open = burger.getAttribute('aria-expanded') === 'true';
+      if (mqMobile.matches && !open) menu.setAttribute('inert', '');
+      else menu.removeAttribute('inert');
+    };
 
     var setMenu = function (open) {
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       if (label) label.textContent = open ? 'Close' : 'Menu';
       menu.classList.toggle('on', open);
+      if (backdrop) backdrop.classList.toggle('on', open);
       document.body.style.overflow = open ? 'hidden' : '';
-      if (open) sizeMenu();
+      if (open) sizeMenu(); else menu.scrollTop = 0;
+      syncInert();
+
+      /* Lenis calls preventDefault() on every wheel/touch event while stopped,
+         which would also block scrolling inside the open menu. The menu carries
+         data-lenis-prevent so Lenis ignores events originating inside it. */
       if (lenis) { open ? lenis.stop() : lenis.start(); }
+
+      if (open) {
+        var first = menu.querySelector('a');
+        if (first) first.focus({ preventScroll: true });
+      }
     };
+
+    syncInert();
+    if (mqMobile.addEventListener) mqMobile.addEventListener('change', syncInert);
+
     burger.addEventListener('click', function () {
       setMenu(burger.getAttribute('aria-expanded') !== 'true');
     });
+
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () { setMenu(false); burger.focus(); });
+      // Belt and braces on iOS, where overflow:hidden alone does not lock scroll.
+      backdrop.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+    }
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setMenu(false); burger.focus(); }
+      if (burger.getAttribute('aria-expanded') !== 'true') return;
+      if (e.key === 'Escape') { setMenu(false); burger.focus(); return; }
+      if (e.key !== 'Tab') return;
+      // Keep focus inside the menu while it is open.
+      var items = [burger].concat(Array.prototype.slice.call(menu.querySelectorAll('a')));
+      var idx = items.indexOf(document.activeElement);
+      if (idx === -1) return;
+      var next = e.shiftKey ? idx - 1 : idx + 1;
+      if (next < 0) next = items.length - 1;
+      if (next >= items.length) next = 0;
+      e.preventDefault();
+      items[next].focus();
     });
+
     window.addEventListener('resize', function () {
       // Resizing up to the desktop nav leaves the body scroll-locked otherwise.
       if (window.innerWidth > 860) {
         if (burger.getAttribute('aria-expanded') === 'true') setMenu(false);
         menu.style.maxHeight = '';
+        syncInert();
         return;
       }
       if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
       else menu.style.maxHeight = '';
+      syncInert();
     });
+
+    /* Restoring from bfcache (mobile back button) can replay a state where the
+       menu was open, leaving the page scroll-locked. Always reset. */
+    window.addEventListener('pageshow', function () { setMenu(false); });
   }
 
   /* ---------- Custom cursor ---------- */
