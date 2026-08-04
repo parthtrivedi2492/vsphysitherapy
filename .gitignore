@@ -2,3 +2,5 @@ node_modules/
 .vercel
 .ds_store
 Thumbs.db
+
+.vercel
