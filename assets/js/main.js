@@ -67,12 +67,13 @@
   if (burger && menu) {
     var backdrop = document.querySelector('.nav-backdrop');
 
-    /* The header uses backdrop-filter, which makes it the containing block for
-       the fixed-position menu. That means viewport units in CSS overshoot by the
-       height of the announcement bar, so measure the real gap instead. */
+    /* Use the visual viewport on mobile so browser chrome and orientation
+       changes cannot leave the last links outside the tappable area. */
     var sizeMenu = function () {
       var top = menu.getBoundingClientRect().top;
-      menu.style.maxHeight = Math.max(160, window.innerHeight - top - 8) + 'px';
+      var viewport = window.visualViewport;
+      var bottom = viewport ? viewport.height + viewport.offsetTop : window.innerHeight;
+      menu.style.maxHeight = Math.max(160, bottom - top - 8) + 'px';
     };
 
     var label = burger.querySelector('.burger__label');
@@ -88,6 +89,8 @@
     };
 
     var setMenu = function (open) {
+      // A restored click or delayed event must never open mobile UI on desktop.
+      open = Boolean(open && mqMobile.matches);
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       if (label) label.textContent = open ? 'Close' : 'Menu';
@@ -109,7 +112,12 @@
     };
 
     syncInert();
-    if (mqMobile.addEventListener) mqMobile.addEventListener('change', syncInert);
+    if (mqMobile.addEventListener) {
+      mqMobile.addEventListener('change', function (e) {
+        if (!e.matches) setMenu(false);
+        else syncInert();
+      });
+    }
 
     burger.addEventListener('click', function () {
       setMenu(burger.getAttribute('aria-expanded') !== 'true');
@@ -151,9 +159,29 @@
       syncInert();
     });
 
-    /* Restoring from bfcache (mobile back button) can replay a state where the
-       menu was open, leaving the page scroll-locked. Always reset. */
-    window.addEventListener('pageshow', function () { setMenu(false); });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', function () {
+        if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
+      });
+      window.visualViewport.addEventListener('scroll', function () {
+        if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
+      });
+    }
+
+    var resetMenu = function () {
+      setMenu(false);
+      menu.style.maxHeight = '';
+    };
+
+    /* Navigation and bfcache can preserve DOM and inline overflow state.
+       Reset both when leaving and when restoring, and close if the browser
+       suspends the tab while the menu is open. */
+    window.addEventListener('pagehide', resetMenu);
+    window.addEventListener('pageshow', resetMenu);
+    window.addEventListener('popstate', resetMenu);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) resetMenu();
+    });
   }
 
   /* ---------- Custom cursor ---------- */

@@ -711,7 +711,10 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
 
 @media (max-width: 860px) {
   .menu {
-    position: fixed; inset: var(--nav-h) 0 auto 0; flex-direction: column; align-items: stretch; gap: 0;
+    /* Absolute under the sticky header is more reliable than position:fixed
+       inside a backdrop-filter container (notably after Safari page restores). */
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
     background: var(--paper); padding: 1rem var(--gutter) 2rem; border-bottom: 1px solid var(--hair);
     box-shadow: var(--shadow-2); opacity: 0; transform: translateY(-10px); pointer-events: none;
     /* visibility (not just opacity) so closed menu links leave the tab order
