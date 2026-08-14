@@ -463,11 +463,46 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
 .split--rev .split__fig { order: 2; }
 .split__fig img { width: 100%; border-radius: var(--r-lg); box-shadow: var(--shadow-2); aspect-ratio: 4/3.4; object-fit: cover; }
 .split__fig--arch img { border-radius: var(--arch); aspect-ratio: 1/1.15; }
+.media--opening img { object-position: center 42%; }
+.media--gym img { object-position: 56% center; }
+.media--reception img { object-position: 54% center; }
+.media--manual img { object-position: center 48%; }
+.media--chiro img { object-position: center 46%; }
+.media--massage img { object-position: center 46%; }
+.media--naturopathy img { object-position: center 48%; }
+.media--acupuncture img { object-position: center 45%; }
+.media--sports img { object-position: center 46%; }
 .ticks { display: grid; gap: .95rem; margin-top: 1.9rem; }
 .ticks li { display: flex; gap: .8rem; align-items: flex-start; font-size: .97rem; }
 .ticks .ck { width: 21px; height: 21px; border-radius: 50%; background: var(--sage-100); color: var(--sage-700); display: grid; place-items: center; flex-shrink: 0; margin-top: .18rem; }
 .ticks .ck svg { width: 12px; height: 12px; }
 .dark .ticks .ck { background: var(--moss); color: var(--sage-200); }
+
+/* ---------- Clinic gallery ---------- */
+.clinic-gallery {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(2, minmax(220px, 1fr)); gap: 1.1rem;
+}
+.clinic-gallery__item {
+  grid-column: span 5; position: relative; overflow: hidden;
+  min-height: 250px; border-radius: var(--r-lg); background: var(--sage-100);
+  box-shadow: var(--shadow-1);
+}
+.clinic-gallery__item--wide { grid-column: span 7; grid-row: span 2; }
+.clinic-gallery__item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s var(--ease-out), filter .5s var(--ease);
+}
+.clinic-gallery__item--wide img { object-position: center 48%; }
+.clinic-gallery__item:hover img { transform: scale(1.035); filter: saturate(1.04); }
+.clinic-gallery__item::after {
+  content: ""; position: absolute; inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(19, 30, 23, .7)); pointer-events: none;
+}
+.clinic-gallery__item figcaption {
+  position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.05rem; z-index: 1;
+  font-family: var(--serif); font-size: 1.15rem; color: var(--paper); letter-spacing: -.02em;
+}
 
 /* ---------- 17. Coverage / areas ---------- */
 .areas { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.6rem; }
@@ -720,6 +755,7 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .hero__chip--b { right: 1rem; top: 1rem; }
   .proc__sticky { position: static; }
   .cta { grid-template-columns: 1fr; }
+  .clinic-gallery { grid-template-rows: repeat(2, minmax(190px, 1fr)); }
   .announce__track { animation-duration: 30s; }
 }
 
@@ -727,6 +763,10 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   body { font-size: 16px; }
   .sp3, .sp4, .sp5, .sp6, .sp7, .sp8 { grid-column: span 12; }
   .local, .local--3, .team, .frow { grid-template-columns: 1fr; }
+  .clinic-gallery { grid-template-columns: 1fr; grid-template-rows: none; }
+  .clinic-gallery__item, .clinic-gallery__item--wide {
+    grid-column: 1; grid-row: auto; min-height: 250px; aspect-ratio: 4/3;
+  }
   .stats { grid-template-columns: 1fr; }
   .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair-dark); }
   .stat:first-child { border-top: 0; }
