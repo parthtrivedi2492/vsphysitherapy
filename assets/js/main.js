@@ -400,6 +400,17 @@
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* ---------- Appointment date ---------- */
+  var todayToronto = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  document.querySelectorAll('input[type="date"]').forEach(function (input) {
+    input.min = todayToronto;
+    input.addEventListener('change', function () {
+      if (input.value && input.value < todayToronto) input.value = '';
+    });
+  });
+
   /* ---------- Form validation ---------- */
   document.querySelectorAll('form[data-validate]').forEach(function (form) {
     var done = form.querySelector('.done');
