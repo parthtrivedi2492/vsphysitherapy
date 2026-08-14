@@ -266,6 +266,7 @@ h4 { font-size: 1.05rem; }
   display: none; align-items: center; gap: .55rem; height: 44px;
   padding: 0 .95rem 0 .8rem; border: 1px solid var(--sage-300); border-radius: var(--pill);
   background: var(--sage-100); cursor: pointer; flex: 0 0 auto;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   transition: background .25s var(--ease), border-color .25s var(--ease);
 }
 .burger:hover { background: var(--sage-200); border-color: var(--sage-500); }

@@ -119,8 +119,26 @@
       });
     }
 
-    burger.addEventListener('click', function () {
+    var suppressClickUntil = 0;
+    var toggleMenu = function () {
       setMenu(burger.getAttribute('aria-expanded') !== 'true');
+    };
+
+    /* Some mobile browsers can drop the synthesized click after a page
+       transition when the trigger sits inside a sticky, filtered header.
+       Toggle on touch/pen pointer-up directly, then suppress its follow-up
+       click so one tap never toggles twice. Mouse and keyboard keep the native
+       click path. */
+    burger.addEventListener('pointerup', function (e) {
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+      e.preventDefault();
+      suppressClickUntil = Date.now() + 600;
+      toggleMenu();
+    });
+
+    burger.addEventListener('click', function () {
+      if (Date.now() < suppressClickUntil) return;
+      toggleMenu();
     });
 
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
