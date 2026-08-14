@@ -358,7 +358,8 @@
   /* ---------- Live open/closed status (America/Toronto) ---------- */
   var flag = document.querySelector('[data-openflag]');
   if (flag) {
-    var HOURS = { 1: [450, 1200], 2: [450, 1200], 3: [450, 1200], 4: [450, 1200], 5: [450, 1080], 6: [540, 900], 0: null };
+    // Minutes from midnight, America/Toronto. Mon-Thu 9-20, Fri 9-18, Sat 9-15.
+    var HOURS = { 1: [540, 1200], 2: [540, 1200], 3: [540, 1200], 4: [540, 1200], 5: [540, 1080], 6: [540, 900], 0: null };
     var parts = new Intl.DateTimeFormat('en-CA', {
       timeZone: 'America/Toronto', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
     }).formatToParts(new Date());
@@ -378,29 +379,19 @@
   var mapEl = document.getElementById('map');
   if (mapEl && window.L) {
     var L = window.L;
-    var CLINIC = [43.5890, -79.6441]; // Cooksville, Mississauga
-    var map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true }).setView([43.6600, -79.5200], 9);
+    // Approximate — verify against Google Maps before launch.
+    var CLINIC = [43.6470, -79.6230]; // 5160 Explorer Dr, Mississauga
+    var map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true }).setView(CLINIC, 14);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19
     }).addTo(map);
-
-    L.circle(CLINIC, { radius: 25000, color: '#4F6F58', weight: 1, fillColor: '#6B8F74', fillOpacity: 0.12 }).addTo(map);
 
     var pin = L.divIcon({
       className: '', iconSize: [30, 30], iconAnchor: [15, 15],
       html: '<span style="display:block;width:30px;height:30px;border-radius:50%;background:#C0724A;border:3px solid #FAF7F0;box-shadow:0 4px 14px rgba(19,30,23,.35)"></span>'
     });
-    L.marker(CLINIC, { icon: pin, title: 'VS Physiotherapy' }).addTo(map)
-      .bindPopup('<b>VS Physiotherapy</b><br>220 Sage Ridge Blvd, Unit 12<br>Mississauga, ON L5B 3C9<br><small>5 min from Cooksville GO</small>');
-
-    [
-      ['Brampton', 43.6832, -79.7629], ['Etobicoke', 43.6205, -79.5132],
-      ['Oakville', 43.4675, -79.6877], ['Vaughan', 43.8361, -79.4983],
-      ['North York', 43.7615, -79.4111], ['Milton', 43.5183, -79.8774]
-    ].forEach(function (a) {
-      L.circleMarker([a[1], a[2]], { radius: 5, color: '#4F6F58', weight: 2, fillColor: '#FAF7F0', fillOpacity: 1 })
-        .addTo(map).bindTooltip(a[0], { direction: 'top', offset: [0, -6] });
-    });
+    L.marker(CLINIC, { icon: pin, title: 'VS Physiotherapy & Rehabilitation Centre' }).addTo(map)
+      .bindPopup('<b>VS Physio &amp; Rehab</b><br>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7<br><small>Free on-site parking</small>');
 
     mapEl.addEventListener('click', function () { map.scrollWheelZoom.enable(); });
     map.on('mouseout', function () { map.scrollWheelZoom.disable(); });

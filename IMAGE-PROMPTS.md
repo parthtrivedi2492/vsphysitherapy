@@ -49,18 +49,18 @@ no thumbs up, no crossed arms power poses, not a spa, no candles, no hot stones
 
 ## Casting & consistency notes
 
-The clinic is in **Cooksville, Mississauga**. Patients should look like the
+The clinic is in **Mississauga (5160 Explorer Dr)**. Patients should look like the
 actual GTA: predominantly South Asian, plus Black, East Asian, White and Latin
 American across a wide age range. This is not decoration - it is the single
 biggest signal that the site is local rather than generic.
 
-**There is one practitioner: Sweni Shah, Registered Physiotherapist.** She
+**There is one practitioner: Sweni, Registered Physiotherapist.** She
 appears in the hero, in her portrait, and in most treatment scenes, so keeping
 her consistent across images matters more than anything else here.
 
 | Person | Role | Description to reuse verbatim |
 |---|---|---|
-| Sweni Shah | Registered Physiotherapist, founder | South Asian woman, mid-to-late 30s, shoulder-length dark hair tied back, warm brown eyes, wearing a sage-green clinical polo or tunic |
+| Sweni | Registered Physiotherapist, founder | South Asian woman, mid-to-late 30s, shoulder-length dark hair tied back, warm brown eyes, wearing a sage-green clinical polo or tunic |
 
 > **Tip:** generate her portrait first, then attach it as a reference image for
 > every scene she appears in. Without a reference, she will look like a
@@ -141,7 +141,7 @@ window. Shallow depth of field, focus on the hands. Horizontal composition, calm
 uncluttered background in the lower third of the frame.
 ```
 
-### `photo_pelvic_health.png` *(replaces existing)*
+### `photo_naturopathy.png` *(replaces existing)*
 ```
 A South Asian female physiotherapist in a sage-green polo sitting and talking
 with a female patient in a private consultation room, an anatomical pelvis model
@@ -307,7 +307,7 @@ documentary photography, horizontal.
 
 # Legal / ethical notes
 
-- **Sweni Shah is a real, named, registered physiotherapist.** Do not publish an
+- **Sweni is a real, named, registered physiotherapist.** Do not publish an
   AI-generated face under her name. The site identifies her as registered with
   the College of Physiotherapists of Ontario, and putting a synthetic face to a
   regulated clinician's credentials is misleading and a genuine
