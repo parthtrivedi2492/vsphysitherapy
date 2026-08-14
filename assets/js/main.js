@@ -52,8 +52,7 @@
 
   /* ---------- Header ---------- */
   var hdr = document.querySelector('.hdr');
-  var burger = document.querySelector('.burger');
-  var menu = document.getElementById('menu');
+  var mobileMenu = document.querySelector('.mobile-menu');
   var bookbar = document.querySelector('.bookbar');
 
   var onScroll = function () {
@@ -64,142 +63,31 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  if (burger && menu) {
-    var backdrop = document.querySelector('.nav-backdrop');
-
-    /* Use the visual viewport on mobile so browser chrome and orientation
-       changes cannot leave the last links outside the tappable area. */
-    var sizeMenu = function () {
-      var top = menu.getBoundingClientRect().top;
-      var viewport = window.visualViewport;
-      var bottom = viewport ? viewport.height + viewport.offsetTop : window.innerHeight;
-      menu.style.maxHeight = Math.max(160, bottom - top - 8) + 'px';
+  if (mobileMenu) {
+    var mobileLabel = mobileMenu.querySelector('.mobile-menu__label');
+    var mobileSummary = mobileMenu.querySelector('summary');
+    var closeMobileMenu = function () {
+      mobileMenu.removeAttribute('open');
+      if (mobileLabel) mobileLabel.textContent = 'Menu';
     };
 
-    var label = burger.querySelector('.burger__label');
-    var mqMobile = window.matchMedia('(max-width: 860px)');
-
-    /* Keep the collapsed menu out of the tab order and the accessibility tree.
-       `inert` is used rather than relying on the CSS visibility transition,
-       because that transition only resolves once a frame is painted. */
-    var syncInert = function () {
-      var open = burger.getAttribute('aria-expanded') === 'true';
-      if (mqMobile.matches && !open) menu.setAttribute('inert', '');
-      else menu.removeAttribute('inert');
-    };
-
-    var setMenu = function (open) {
-      // A restored click or delayed event must never open mobile UI on desktop.
-      open = Boolean(open && mqMobile.matches);
-      burger.setAttribute('aria-expanded', String(open));
-      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      if (label) label.textContent = open ? 'Close' : 'Menu';
-      menu.classList.toggle('on', open);
-      if (backdrop) backdrop.classList.toggle('on', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-      if (open) sizeMenu(); else menu.scrollTop = 0;
-      syncInert();
-
-      /* Lenis calls preventDefault() on every wheel/touch event while stopped,
-         which would also block scrolling inside the open menu. The menu carries
-         data-lenis-prevent so Lenis ignores events originating inside it. */
-      if (lenis) { open ? lenis.stop() : lenis.start(); }
-
-      if (open) {
-        var first = menu.querySelector('a');
-        if (first) first.focus({ preventScroll: true });
-      }
-    };
-
-    syncInert();
-    if (mqMobile.addEventListener) {
-      mqMobile.addEventListener('change', function (e) {
-        if (!e.matches) setMenu(false);
-        else syncInert();
-      });
-    }
-
-    var suppressClickUntil = 0;
-    var toggleMenu = function () {
-      setMenu(burger.getAttribute('aria-expanded') !== 'true');
-    };
-
-    /* Some mobile browsers can drop the synthesized click after a page
-       transition when the trigger sits inside a sticky, filtered header.
-       Toggle on touch/pen pointer-up directly, then suppress its follow-up
-       click so one tap never toggles twice. Mouse and keyboard keep the native
-       click path. */
-    burger.addEventListener('pointerup', function (e) {
-      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
-      e.preventDefault();
-      suppressClickUntil = Date.now() + 600;
-      toggleMenu();
+    mobileMenu.addEventListener('toggle', function () {
+      if (mobileLabel) mobileLabel.textContent = mobileMenu.open ? 'Close' : 'Menu';
     });
-
-    burger.addEventListener('click', function () {
-      if (Date.now() < suppressClickUntil) return;
-      toggleMenu();
+    mobileMenu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) closeMobileMenu();
     });
-
-    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-
-    if (backdrop) {
-      backdrop.addEventListener('click', function () { setMenu(false); burger.focus(); });
-      // Belt and braces on iOS, where overflow:hidden alone does not lock scroll.
-      backdrop.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
-    }
-
+    document.addEventListener('pointerdown', function (e) {
+      if (mobileMenu.open && !mobileMenu.contains(e.target)) closeMobileMenu();
+    });
     document.addEventListener('keydown', function (e) {
-      if (burger.getAttribute('aria-expanded') !== 'true') return;
-      if (e.key === 'Escape') { setMenu(false); burger.focus(); return; }
-      if (e.key !== 'Tab') return;
-      // Keep focus inside the menu while it is open.
-      var items = [burger].concat(Array.prototype.slice.call(menu.querySelectorAll('a')));
-      var idx = items.indexOf(document.activeElement);
-      if (idx === -1) return;
-      var next = e.shiftKey ? idx - 1 : idx + 1;
-      if (next < 0) next = items.length - 1;
-      if (next >= items.length) next = 0;
-      e.preventDefault();
-      items[next].focus();
-    });
-
-    window.addEventListener('resize', function () {
-      // Resizing up to the desktop nav leaves the body scroll-locked otherwise.
-      if (window.innerWidth > 860) {
-        if (burger.getAttribute('aria-expanded') === 'true') setMenu(false);
-        menu.style.maxHeight = '';
-        syncInert();
-        return;
+      if (e.key === 'Escape' && mobileMenu.open) {
+        closeMobileMenu();
+        if (mobileSummary) mobileSummary.focus();
       }
-      if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
-      else menu.style.maxHeight = '';
-      syncInert();
     });
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', function () {
-        if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
-      });
-      window.visualViewport.addEventListener('scroll', function () {
-        if (burger.getAttribute('aria-expanded') === 'true') sizeMenu();
-      });
-    }
-
-    var resetMenu = function () {
-      setMenu(false);
-      menu.style.maxHeight = '';
-    };
-
-    /* Navigation and bfcache can preserve DOM and inline overflow state.
-       Reset both when leaving and when restoring, and close if the browser
-       suspends the tab while the menu is open. */
-    window.addEventListener('pagehide', resetMenu);
-    window.addEventListener('pageshow', resetMenu);
-    window.addEventListener('popstate', resetMenu);
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) resetMenu();
-    });
+    window.addEventListener('pagehide', closeMobileMenu);
+    window.addEventListener('pageshow', closeMobileMenu);
   }
 
   /* ---------- Custom cursor ---------- */

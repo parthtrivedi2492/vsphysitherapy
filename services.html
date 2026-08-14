@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260814-4">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260814-5">
 <script>document.documentElement.classList.add('has-js');</script>
 </head>
 <body>
@@ -37,7 +37,7 @@
       <img src="vs_physio_design_assets/logo_app_icon.png" alt="">
       <span class="logo__txt"><b>VS Physio &amp; Rehab</b><i>Move Better · Live Better</i></span>
     </a>
-    <nav class="menu" id="menu" aria-label="Primary" data-lenis-prevent>
+    <nav class="menu" id="menu" aria-label="Primary">
       <a href="index.html">Home</a>
       <a href="services.html" aria-current="page">Services</a>
       <a href="about.html">Clinic</a>
@@ -48,12 +48,15 @@
     <div class="hdr__cta">
       <a class="callchip" href="tel:+14168586014"><span class="ic"><i data-lucide="phone"></i></span>416 · 858 · 6014</a>
       <a class="btn" href="contact.html#book" data-cursor="Book" data-magnetic>Book now</a>
-      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span class="burger__bars"><i></i><i></i><i></i></span><span class="burger__label">Menu</span></button>
+      <details class="mobile-menu">
+        <summary><span class="burger__bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="mobile-menu__label">Menu</span></summary>
+        <nav class="mobile-menu__panel" aria-label="Mobile navigation" data-lenis-prevent>
+          <a href="index.html">Home</a><a href="services.html" aria-current="page">Services</a><a href="about.html">Clinic</a><a href="index.html#opening">Grand Opening</a><a href="index.html#faq">FAQ</a><a href="contact.html">Contact</a>
+        </nav>
+      </details>
     </div>
   </div>
 </header>
-
-<div class="nav-backdrop" aria-hidden="true"></div>
 
 <main>
 
@@ -303,6 +306,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
-<script src="assets/js/main.js?v=20260814-4"></script>
+<script src="assets/js/main.js?v=20260814-5"></script>
 </body>
 </html>

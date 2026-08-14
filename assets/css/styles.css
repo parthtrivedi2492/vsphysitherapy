@@ -262,23 +262,26 @@ h4 { font-size: 1.05rem; }
 .callchip .ic { width: 26px; height: 26px; border-radius: 50%; background: var(--sage-700); color: var(--paper); display: grid; place-items: center; }
 .callchip .ic svg { width: 13px; height: 13px; }
 
-.burger {
-  display: none; align-items: center; gap: .55rem; height: 44px;
+.mobile-menu { display: none; }
+.mobile-menu summary {
+  display: flex; align-items: center; gap: .55rem; height: 44px;
   padding: 0 .95rem 0 .8rem; border: 1px solid var(--sage-300); border-radius: var(--pill);
-  background: var(--sage-100); cursor: pointer; flex: 0 0 auto;
+  background: var(--sage-100); cursor: pointer; user-select: none;
   touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   transition: background .25s var(--ease), border-color .25s var(--ease);
 }
-.burger:hover { background: var(--sage-200); border-color: var(--sage-500); }
+.mobile-menu summary::-webkit-details-marker { display: none; }
+.mobile-menu summary::marker { content: ""; }
+.mobile-menu summary:hover { background: var(--sage-200); border-color: var(--sage-500); }
 .burger__bars { position: relative; width: 18px; height: 12px; flex: 0 0 auto; }
 .burger__bars i { position: absolute; left: 0; width: 18px; height: 1.7px; background: var(--forest); border-radius: 2px; transition: transform .4s var(--ease-out), opacity .25s; }
 .burger__bars i:nth-child(1) { top: 0; }
 .burger__bars i:nth-child(2) { top: 5.2px; }
 .burger__bars i:nth-child(3) { top: 10.4px; }
-.burger[aria-expanded="true"] .burger__bars i:nth-child(1) { transform: translateY(5.2px) rotate(45deg); }
-.burger[aria-expanded="true"] .burger__bars i:nth-child(2) { opacity: 0; }
-.burger[aria-expanded="true"] .burger__bars i:nth-child(3) { transform: translateY(-5.2px) rotate(-45deg); }
-.burger__label {
+.mobile-menu[open] .burger__bars i:nth-child(1) { transform: translateY(5.2px) rotate(45deg); }
+.mobile-menu[open] .burger__bars i:nth-child(2) { opacity: 0; }
+.mobile-menu[open] .burger__bars i:nth-child(3) { transform: translateY(-5.2px) rotate(-45deg); }
+.mobile-menu__label {
   font-family: var(--mono); font-size: .68rem; letter-spacing: .14em;
   text-transform: uppercase; color: var(--forest); line-height: 1;
 }
@@ -711,47 +714,29 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
 }
 
 @media (max-width: 860px) {
-  .menu {
-    /* Absolute under the sticky header is more reliable than position:fixed
-       inside a backdrop-filter container (notably after Safari page restores). */
+  .menu { display: none; }
+  .mobile-menu { display: block; }
+  .mobile-menu__panel {
     position: absolute; top: 100%; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--paper); padding: 1rem var(--gutter) 2rem; border-bottom: 1px solid var(--hair);
-    box-shadow: var(--shadow-2); opacity: 0; transform: translateY(-10px); pointer-events: none;
-    /* visibility (not just opacity) so closed menu links leave the tab order
-       and the accessibility tree; delayed so the fade-out still animates. */
-    visibility: hidden;
-    transition: opacity .3s var(--ease), transform .3s var(--ease-out), visibility 0s .3s;
-    max-height: calc(100dvh - var(--nav-h));
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+    display: flex; flex-direction: column;
+    max-height: min(480px, 65dvh); overflow-y: auto;
+    padding: .55rem var(--gutter) 1.1rem;
+    background: var(--paper); border-bottom: 1px solid var(--hair); box-shadow: var(--shadow-2);
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
   }
-  .menu.on {
-    opacity: 1; transform: none; pointer-events: auto; visibility: visible;
-    transition: opacity .3s var(--ease), transform .3s var(--ease-out), visibility 0s;
+  .mobile-menu__panel a {
+    padding: .78rem .15rem; min-height: 44px;
+    border-bottom: 1px solid var(--hair); font-family: var(--serif);
+    font-size: 1.05rem; color: var(--forest);
   }
-  .menu a { padding: .95rem .2rem; font-size: 1.1rem; font-family: var(--serif); border-bottom: 1px solid var(--hair); border-radius: 0; }
-  .menu a::after { display: none; }
-  .burger { display: flex; }
+  .mobile-menu__panel a:last-child { border-bottom: 0; }
+  .mobile-menu__panel a[aria-current="page"] { color: var(--sage-700); font-weight: 600; }
   .hdr__cta .btn { display: none; }
   .bookbar { display: flex; }
   .logo__txt i { display: block; }
   .logo__txt b { font-size: 1.15rem; }
   .logo img { width: 40px; height: 40px; border-radius: 12px; }
 }
-
-/* Backdrop behind the mobile menu: dims the page, catches outside taps, and
-   stops touches reaching content underneath. Sits below the header (z-90) so
-   the burger stays tappable, above the book bar (z-88). */
-.nav-backdrop {
-  position: fixed; inset: 0; z-index: 89;
-  background: rgba(19, 30, 23, .45);
-  opacity: 0; visibility: hidden; pointer-events: none; touch-action: none;
-  transition: opacity .3s var(--ease), visibility 0s .3s;
-}
-.nav-backdrop.on { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .3s var(--ease), visibility 0s; }
-@media (min-width: 861px) { .nav-backdrop { display: none; } }
 
 @media (max-width: 960px) {
   .hero__grid, .split, .proc { grid-template-columns: 1fr; }
@@ -793,8 +778,8 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .logo img { width: 34px; height: 34px; border-radius: 10px; }
   .logo__txt b { font-size: .98rem; }
   .logo__txt i { font-size: .48rem; letter-spacing: .14em; }
-  .burger { height: 44px; padding: 0 .7rem 0 .6rem; gap: .45rem; }
-  .burger__label { font-size: .62rem; letter-spacing: .1em; }
+  .mobile-menu summary { height: 44px; padding: 0 .7rem 0 .6rem; gap: .45rem; }
+  .mobile-menu__label { font-size: .62rem; letter-spacing: .1em; }
   .faq summary { padding-right: 2.4rem; }
   .faq details p { padding-right: 0; }
   .bookbar .btn { padding: .85rem .55rem; font-size: .82rem; }
