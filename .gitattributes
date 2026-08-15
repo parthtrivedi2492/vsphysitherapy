@@ -1,0 +1,2 @@
+# Adobe Illustrator files contain PDF/binary data and must never be line-normalized.
+*.ai binary
