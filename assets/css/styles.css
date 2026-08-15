@@ -541,6 +541,7 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
 .condition-card--cta .tlink { color: var(--sage-200); }
 
 #map, .mapbox { height: 440px; width: 100%; border-radius: var(--r-lg); border: 1px solid var(--hair); overflow: hidden; z-index: 1; background: var(--sage-50); }
+.mapbox--contact { height: 380px; }
 .leaflet-container { font-family: var(--sans); background: var(--sage-50); }
 .leaflet-popup-content-wrapper { border-radius: var(--r-sm); box-shadow: var(--shadow-2); }
 .leaflet-popup-content { font-size: .88rem; margin: .8rem 1rem; }
@@ -578,7 +579,7 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
 .faq summary::before { width: 15px; height: 1.6px; margin-top: -.8px; }
 .faq summary::after { width: 1.6px; height: 15px; margin: -7.5px -6.7px 0 0; right: 1.2rem; }
 .faq details[open] summary::after { transform: rotate(90deg); }
-.faq details p { padding: 0 3rem 1.7rem 0; font-size: .97rem; max-width: 72ch; }
+.faq details p { padding: 0 0 1.7rem; font-size: .97rem; max-width: 72ch; }
 
 /* ---------- 20. Forms ---------- */
 .panel { background: var(--white); border: 1px solid var(--hair); border-radius: var(--r-lg); padding: clamp(1.6rem, 3.2vw, 2.6rem); }
@@ -606,6 +607,7 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
 .pills { display: flex; flex-wrap: wrap; gap: .45rem; }
 .pills input { position: absolute; opacity: 0; width: 0; height: 0; }
 .pills label {
+  display: inline-flex; align-items: center; min-height: 44px;
   font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; padding: .55rem 1rem; border-radius: var(--pill);
   border: 1px solid var(--hair); cursor: pointer; text-transform: none; color: var(--ink-2);
   transition: background .25s var(--ease), color .25s, border-color .25s;
@@ -779,7 +781,7 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .cta { grid-template-columns: 1fr; }
   .conditions-grid { grid-template-columns: 1fr 1fr; }
   .clinic-gallery { grid-template-rows: repeat(2, minmax(190px, 1fr)); }
-  .announce__track { animation-duration: 30s; }
+  .announce__track { animation-duration: 44s; }
 }
 
 @media (max-width: 640px) {
@@ -800,8 +802,9 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .ftr__grid > div:first-child p { margin-inline: auto; }
   .footer-lockup { margin-inline: auto; }
   .hero__acts .btn { width: 100%; }
-  .tile { min-height: 220px; }
-  .tall { min-height: 320px; }
+  .tile { min-height: 210px; }
+  .tall { min-height: 280px; }
+  #map, .mapbox, .mapbox--contact { height: 300px; }
   .faq summary { font-size: 1.05rem; }
 }
 
@@ -824,8 +827,10 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
 
 /* Landscape phones: keep the open menu scrollable inside a short viewport. */
 @media (max-height: 480px) and (orientation: landscape) {
-  .menu { max-height: calc(100dvh - var(--nav-h)); overflow-y: auto; }
+  .mobile-menu__panel { max-height: 65dvh; }
   .hero { padding-top: 1.5rem; }
+  .bookbar { display: none; }
+  #map, .mapbox, .mapbox--contact { height: 220px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
