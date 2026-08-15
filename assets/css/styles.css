@@ -796,6 +796,9 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair-dark); }
   .stat:first-child { border-top: 0; }
   .ftr__grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .ftr__grid > div:first-child { text-align: center; }
+  .ftr__grid > div:first-child p { margin-inline: auto; }
+  .footer-lockup { margin-inline: auto; }
   .hero__acts .btn { width: 100%; }
   .tile { min-height: 220px; }
   .tall { min-height: 320px; }
