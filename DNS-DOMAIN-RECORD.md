@@ -58,13 +58,11 @@ following will cause mail to stop being delivered.
 | TXT  | `@`                   | `v=spf1 include:spf.titan.email ~all`                     |
 | TXT  | `@`                   | `v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100`          |
 | TXT  | `_dmarc`              | `v=DMARC1; p=none`                                        |
-| TXT  | `default._domainkey`  | `v=DKIM1;...` (long RSA public key — see zone backup)     |
-| TXT  | `titan1._domainkey`   | `v=DKIM1;...` (long RSA public key — see zone backup)     |
+| TXT  | `default._domainkey`  | `v=DKIM1;...` (full key in section 5 below)              |
+| TXT  | `titan1._domainkey`   | `v=DKIM1;...` (full key in section 5 below)              |
 | SRV  | `_autodiscover._tcp`  | `cpanelemaildiscovery.cpanel.net`                         |
 
-> The two DKIM values are long RSA keys that are not reproduced in full here.
-> Keep an exported copy of the full zone file (see section 5) so they can be
-> restored verbatim if ever lost.
+Both MX records have **preference 0**.
 
 ---
 
@@ -80,12 +78,45 @@ Bluehost service records — harmless leftovers, not used by the Vercel site:
 
 ---
 
-## 5. Recommended: keep a full zone backup
+## 5. Full zone snapshot — verified 15 August 2026, after the migration
 
-Before any future DNS work, export the complete zone from Bluehost
-(Domains → DNS → Zone Editor → export / or copy the full record table)
-and store it alongside this file. That guarantees the DKIM keys and any
-records not captured here can be restored exactly.
+This is the complete, verbatim record set. Use it to restore any record exactly.
+
+| Type  | Host                        | Value                          | TTL     |
+| ----- | --------------------------- | ------------------------------ | ------- |
+| A     | `@`                         | `76.76.21.21`                  | 15 min  |
+| A     | `autoconfig`                | `50.6.245.114`                 | 1 hr    |
+| A     | `autodiscover`              | `50.6.245.114`                 | 1 hr    |
+| A     | `cpanel`                    | `50.6.245.114`                 | 4 hr    |
+| A     | `ftp`                       | `50.6.245.114`                 | 4 hr    |
+| A     | `localhost`                 | `127.0.0.1`                    | 1 hr    |
+| A     | `ssh`                       | `50.6.245.114`                 | 2 hr    |
+| A     | `webdisk`                   | `50.6.245.114`                 | 1 hr    |
+| A     | `webmail`                   | `50.6.245.114`                 | 4 hr    |
+| A     | `whm`                       | `50.6.245.114`                 | 1 hr    |
+| CNAME | `www`                       | `cname.vercel-dns.com`         | 15 min  |
+| CNAME | `mail`                      | `hostgator.titan.email`        | 2 hr    |
+| MX    | `@` (pref 0)                | `mx1.titan.email`              | 2 hr    |
+| MX    | `@` (pref 0)                | `mx2.titan.email`              | 2 hr    |
+| TXT   | `@`                         | `v=spf1 include:spf.titan.email ~all` | 2 hr |
+| TXT   | `@`                         | `v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100` | 2 hr |
+| TXT   | `_dmarc`                    | `v=DMARC1; p=none`             | 1 hr    |
+| TXT   | `_acme-challenge`           | `lsUEv4oj8NQd0Bx44SmXUSsF-1Ma0JbSJU7asuJxgA0` | 1 hr |
+| SRV   | `_autodiscover._tcp.vsphysio.ca.` | `cpanelemaildiscovery.cpanel.net` | 1 hr |
+
+### DKIM keys (restore verbatim — do not reformat or line-wrap)
+
+`TXT` → `default._domainkey` (TTL 1 hr):
+
+```
+v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtVGoNRE/CKr9MEdnydiE7RcMjo2JXTwqIJ662xGCYHHysGlWNIVCv4RKQSutqF9iukovmHEemGc8jnfm/oLXNvNQy1wHfe+QhRNp0D/mOCpOXTBzZglubKJqPWLWzQFhqW12CR4RFjBXlPFD0SNPBKKO3equ5QGtXcT1JFv8nznfhFRYaVAca6l5/mw1UnH0oSU54CB5mEN2cmsk7DHQRSXv+laF8kWTZrG389z33TEYepth+mi+SBHtoADPNbGHdFFbsBSc6dDsH86X7+fr9eOU1V6jtI4e86Sppb/g8z/Qg10xaC9hEqKJqFzN9O9+LZWrOmw0oUKbUwehl0teXQIDAQAB;
+```
+
+`TXT` → `titan1._domainkey` (TTL 2 hr):
+
+```
+v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiD50fN7x9WuD6fvIDORc0VGZaMzFeXj5DeSNFkJNdypBa5dv1cMHrYB6HJGkRYJ6YLsGz5Obd/XLc1nNKUFL0loqAJKORzY56+f/n6XSDxjKnU3ru8XF7hfEEXS3noLlYalbIK9Sj5ydD3beqKYfu3ifTQgoMLguTnQxseYDXmQIDAQAB
+```
 
 ---
 
