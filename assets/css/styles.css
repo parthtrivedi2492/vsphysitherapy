@@ -522,6 +522,24 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
 .areas li:hover { background: var(--sage-700); color: var(--paper); border-color: var(--sage-700); }
 .areas li[data-primary] { background: var(--sage-100); border-color: var(--sage-300); color: var(--sage-900); font-weight: 500; }
 
+.conditions-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+.condition-card {
+  display: flex; flex-direction: column; gap: .65rem; min-height: 230px;
+  padding: 1.65rem; border: 1px solid var(--hair); border-radius: var(--r-md);
+  background: var(--white); box-shadow: var(--shadow-1);
+  transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out), border-color .35s;
+}
+.condition-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--sage-300); }
+.condition-card .ic { width: 44px; height: 44px; border-radius: 13px; background: var(--sage-100); color: var(--sage-700); display: grid; place-items: center; }
+.condition-card .ic svg { width: 20px; height: 20px; }
+.condition-card p { font-size: .92rem; }
+.condition-card .tlink { margin-top: auto; align-self: flex-start; }
+.condition-card--cta { background: var(--forest); border-color: var(--forest); }
+.condition-card--cta h3 { color: var(--paper); }
+.condition-card--cta p { color: var(--sage-300); }
+.condition-card--cta .ic { background: var(--moss); color: var(--sage-200); }
+.condition-card--cta .tlink { color: var(--sage-200); }
+
 #map, .mapbox { height: 440px; width: 100%; border-radius: var(--r-lg); border: 1px solid var(--hair); overflow: hidden; z-index: 1; background: var(--sage-50); }
 .leaflet-container { font-family: var(--sans); background: var(--sage-50); }
 .leaflet-popup-content-wrapper { border-radius: var(--r-sm); box-shadow: var(--shadow-2); }
@@ -534,6 +552,13 @@ html.rail-pinned .rail__track { overflow: visible; scroll-snap-type: none; }
   padding: .62rem 1.15rem; border-radius: var(--r-xs); background: var(--white); border: 1px solid var(--hair);
   font-size: .85rem; font-weight: 600; color: var(--ink-2); letter-spacing: -.01em;
 }
+.support-list { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.support-list li {
+  display: flex; align-items: center; gap: .65rem; min-height: 48px;
+  padding: .7rem .9rem; border: 1px solid var(--hair); border-radius: var(--r-sm);
+  background: var(--white); color: var(--ink); font-size: .88rem; font-weight: 600;
+}
+.support-list svg { width: 18px; height: 18px; flex: 0 0 auto; color: var(--sage-700); }
 
 /* ---------- 19. FAQ ---------- */
 .faq { display: grid; gap: 0; }
@@ -752,6 +777,7 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   .hero__chip--b { right: 1rem; top: 1rem; }
   .proc__sticky { position: static; }
   .cta { grid-template-columns: 1fr; }
+  .conditions-grid { grid-template-columns: 1fr 1fr; }
   .clinic-gallery { grid-template-rows: repeat(2, minmax(190px, 1fr)); }
   .announce__track { animation-duration: 30s; }
 }
@@ -760,6 +786,8 @@ html.has-js [data-anim="up"] { will-change: transform, opacity; }
   body { font-size: 16px; }
   .sp3, .sp4, .sp5, .sp6, .sp7, .sp8 { grid-column: span 12; }
   .local, .local--3, .team, .frow { grid-template-columns: 1fr; }
+  .conditions-grid, .support-list { grid-template-columns: 1fr; }
+  .condition-card { min-height: 0; }
   .clinic-gallery { grid-template-columns: 1fr; grid-template-rows: none; }
   .clinic-gallery__item, .clinic-gallery__item--wide {
     grid-column: 1; grid-row: auto; min-height: 250px; aspect-ratio: 4/3;

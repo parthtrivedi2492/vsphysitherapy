@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Book Online &amp; Contact | VS Physiotherapy &amp; Rehabilitation Centre, Mississauga</title>
-<meta name="description" content="Book physiotherapy, chiropractic, massage, naturopathy or acupuncture at 5160 Explorer Dr, Unit 9, Mississauga. Call (416) 858-6014 or request an appointment online.">
+<meta name="description" content="Book physiotherapy, chiropractic, massage, acupuncture, naturopathy or rehabilitation at 5160 Explorer Dr, Unit 9, Mississauga. Call (416) 858-6014.">
 <meta name="theme-color" content="#131E17">
 <link rel="icon" type="image/png" href="vs_physio_design_assets/logo_mark_gold.png">
 <link rel="apple-touch-icon" href="vs_physio_design_assets/logo_mark_gold.png">
@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260814-6">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260814-9">
 <script>document.documentElement.classList.add('has-js');</script>
 </head>
 <body>
@@ -75,10 +75,10 @@
   <div class="wrap split" style="align-items:start">
 
     <div data-anim="up">
-      <form class="panel" data-validate novalidate>
+      <form class="panel" data-validate data-email="connectvsphysio@gmail.com" novalidate>
         <div class="done" role="status">
-          <b>Request received.</b>
-          We'll confirm your appointment by phone or email within one business day. If it's urgent, call (416) 858-6014.
+          <b>Your email request is ready.</b>
+          Your email app should open with the details filled in. Review it and press Send. If it does not open, email <a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a>.
         </div>
 
         <p class="label">Appointment request</p>
@@ -120,6 +120,12 @@
             <option>Massage therapy</option>
             <option>Naturopathy</option>
             <option>Acupuncture</option>
+            <option>Rehabilitation &amp; exercise therapy</option>
+            <option>Laser therapy</option>
+            <option>Cupping therapy</option>
+            <option>Braces &amp; supports</option>
+            <option>Compression stockings</option>
+            <option>Custom-made orthotics</option>
             <option>Motor vehicle accident (MVA) claim</option>
             <option>WSIB / workplace injury</option>
           </select>
@@ -144,7 +150,7 @@
           </div>
           <div class="f">
             <label for="ins">Insurance provider</label>
-            <input id="ins" name="insurer" type="text" placeholder="e.g. Sun Life, WSIB, or none">
+            <input id="ins" name="insurer" type="text" placeholder="e.g. EHC, WSIB, MVA, or none">
           </div>
         </div>
 
@@ -153,8 +159,8 @@
           <textarea id="msg" name="message" placeholder="Where it hurts and how long it's been going on."></textarea>
         </div>
 
-        <button class="btn btn--lg btn--block" type="submit" data-magnetic>Request appointment</button>
-        <p class="tiny" style="margin-top:1rem">This form is a front-end demo and does not transmit data — connect it to your booking system before launch. Please don't include sensitive medical details here.</p>
+        <button class="btn btn--lg btn--block" type="submit" data-magnetic>Prepare email request</button>
+        <p class="tiny" style="margin-top:1rem">Submitting opens your email app; you must press Send to deliver the request. Please don't include sensitive medical details here.</p>
       </form>
     </div>
 
@@ -168,18 +174,19 @@
         <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</span></span></li>
         <li><span class="ic"><i data-lucide="phone"></i></span><span><b>Phone</b><a href="tel:+14168586014">(416) 858-6014</a></span></li>
         <li><span class="ic"><i data-lucide="mail"></i></span><span><b>Email</b><a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a></span></li>
+        <li><span class="ic"><i data-lucide="globe-2"></i></span><span><b>Website</b><a href="https://vsphysio.ca">vsphysio.ca</a></span></li>
         <li><span class="ic"><i data-lucide="car"></i></span><span><b>Parking</b><span>Free on-site parking</span></span></li>
       </ul>
 
       <div class="panel" style="margin-top:2rem">
         <p class="label">Opening hours</p>
         <table class="hours" style="margin-top:1rem">
-          <tr data-day="1"><td>Monday</td><td>9:00 – 20:00</td></tr>
-          <tr data-day="2"><td>Tuesday</td><td>9:00 – 20:00</td></tr>
-          <tr data-day="3"><td>Wednesday</td><td>9:00 – 20:00</td></tr>
-          <tr data-day="4"><td>Thursday</td><td>9:00 – 20:00</td></tr>
-          <tr data-day="5"><td>Friday</td><td>9:00 – 18:00</td></tr>
-          <tr data-day="6"><td>Saturday</td><td>9:00 – 15:00</td></tr>
+          <tr data-day="1"><td>Monday</td><td>10:00 – 19:00</td></tr>
+          <tr data-day="2"><td>Tuesday</td><td>10:00 – 19:00</td></tr>
+          <tr data-day="3"><td>Wednesday</td><td>10:00 – 19:00</td></tr>
+          <tr data-day="4"><td>Thursday</td><td>10:00 – 19:00</td></tr>
+          <tr data-day="5"><td>Friday</td><td>10:00 – 19:00</td></tr>
+          <tr data-day="6"><td>Saturday</td><td>10:00 – 16:00</td></tr>
           <tr data-day="0"><td>Sunday</td><td>Closed</td></tr>
         </table>
       </div>
@@ -223,6 +230,7 @@
           <li><a href="services.html#massage">Massage Therapy</a></li>
           <li><a href="services.html#naturopathy">Naturopathy</a></li>
           <li><a href="services.html#acupuncture">Acupuncture</a></li>
+          <li><a href="services.html#rehab">Rehabilitation &amp; Exercise</a></li>
           <li><a href="services.html#claims">MVA &amp; WSIB</a></li>
         </ul>
       </div>
@@ -231,7 +239,7 @@
         <ul>
           <li><a href="about.html">About us</a></li>
           <li><a href="index.html#opening">Grand opening</a></li>
-          <li><a href="services.html#fees">Fees</a></li>
+          <li><a href="services.html#conditions">Conditions</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -242,7 +250,7 @@
           <li>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</li>
           <li><a href="tel:+14168586014">(416) 858-6014</a></li>
           <li><a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a></li>
-          <li>Mon–Thu 9:00–20:00<br>Fri 9:00–18:00 · Sat 9:00–15:00</li>
+          <li>Mon–Fri 10:00–19:00<br>Sat 10:00–16:00 · Sun closed</li>
         </ul>
       </div>
     </div>
@@ -266,6 +274,6 @@
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/js/main.js?v=20260814-6"></script>
+<script src="assets/js/main.js?v=20260814-9"></script>
 </body>
 </html>

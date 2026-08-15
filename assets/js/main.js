@@ -292,8 +292,8 @@
   /* ---------- Live open/closed status (America/Toronto) ---------- */
   var flag = document.querySelector('[data-openflag]');
   if (flag) {
-    // Minutes from midnight, America/Toronto. Mon-Thu 9-20, Fri 9-18, Sat 9-15.
-    var HOURS = { 1: [540, 1200], 2: [540, 1200], 3: [540, 1200], 4: [540, 1200], 5: [540, 1080], 6: [540, 900], 0: null };
+    // Minutes from midnight, America/Toronto. Mon-Fri 10-19, Sat 10-16.
+    var HOURS = { 1: [600, 1140], 2: [600, 1140], 3: [600, 1140], 4: [600, 1140], 5: [600, 1140], 6: [600, 960], 0: null };
     var parts = new Intl.DateTimeFormat('en-CA', {
       timeZone: 'America/Toronto', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
     }).formatToParts(new Date());
@@ -304,7 +304,7 @@
     var open = !!span && mins >= span[0] && mins < span[1];
     flag.classList.toggle('shut', !open);
     var txt = flag.querySelector('[data-openflag-text]');
-    if (txt) txt.textContent = open ? 'Open now — walk-ins welcome' : 'Closed — book online 24/7';
+    if (txt) txt.textContent = open ? 'Open now — contact the clinic' : 'Closed now — email or call during clinic hours';
     var rows = document.querySelectorAll('[data-day]');
     rows.forEach(function (r) { r.classList.toggle('now', parseInt(r.dataset.day, 10) === dayIdx); });
   }
@@ -372,6 +372,26 @@
         if (!check(input)) { ok = false; if (!first) first = input; }
       });
       if (!ok) { if (first) { first.focus(); scrollTo(first.closest('.f')); } return; }
+
+      var recipient = form.dataset.email;
+      if (recipient) {
+        var data = new FormData(form);
+        var fullName = [data.get('firstName'), data.get('lastName')].filter(Boolean).join(' ');
+        var lines = [
+          'Name: ' + fullName,
+          'Email: ' + (data.get('email') || ''),
+          'Phone: ' + (data.get('phone') || ''),
+          'Service: ' + (data.get('service') || ''),
+          'Preferred time: ' + (data.get('slot') || 'No preference'),
+          'Preferred date: ' + (data.get('date') || 'No preference'),
+          'Insurance: ' + (data.get('insurer') || 'Not provided'),
+          '',
+          'Message:',
+          data.get('message') || 'No additional message.'
+        ];
+        var subject = 'Appointment request - ' + fullName;
+        window.location.href = 'mailto:' + recipient + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      }
       if (done) {
         done.classList.add('on');
         done.setAttribute('tabindex', '-1');
