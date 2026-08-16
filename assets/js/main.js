@@ -7,6 +7,7 @@
   'use strict';
 
   var root = document.documentElement;
+  root.classList.add('has-js');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --- Failsafe: never leave animated content invisible --- */
@@ -54,11 +55,16 @@
   var hdr = document.querySelector('.hdr');
   var mobileMenu = document.querySelector('.mobile-menu');
   var bookbar = document.querySelector('.bookbar');
+  var footer = document.querySelector('.ftr');
+  var bookingForm = document.querySelector('form[data-validate]');
+  var footerVisible = false;
+  var formVisible = false;
+  var formFocused = false;
 
   var onScroll = function () {
     var y = window.scrollY || window.pageYOffset;
     if (hdr) hdr.classList.toggle('is-stuck', y > 10);
-    if (bookbar) bookbar.classList.toggle('on', y > 520);
+    if (bookbar) bookbar.classList.toggle('on', y > 520 && !footerVisible && !formVisible && !formFocused);
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -88,6 +94,33 @@
     });
     window.addEventListener('pagehide', closeMobileMenu);
     window.addEventListener('pageshow', closeMobileMenu);
+    mobileMenu.addEventListener('focusout', function () {
+      setTimeout(function () {
+        if (mobileMenu.open && !mobileMenu.contains(document.activeElement)) closeMobileMenu();
+      }, 0);
+    });
+    var mobileBreakpoint = window.matchMedia('(max-width: 860px)');
+    if (mobileBreakpoint.addEventListener) mobileBreakpoint.addEventListener('change', closeMobileMenu);
+    else if (mobileBreakpoint.addListener) mobileBreakpoint.addListener(closeMobileMenu);
+  }
+
+  if (bookbar && footer && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      footerVisible = entries[0].isIntersecting;
+      onScroll();
+    }, { threshold: 0.01 }).observe(footer);
+  }
+  if (bookbar && bookingForm) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        formVisible = entries[0].isIntersecting;
+        onScroll();
+      }, { threshold: 0.01 }).observe(bookingForm);
+    }
+    bookingForm.addEventListener('focusin', function () { formFocused = true; onScroll(); });
+    bookingForm.addEventListener('focusout', function () {
+      setTimeout(function () { formFocused = bookingForm.contains(document.activeElement); onScroll(); }, 0);
+    });
   }
 
   /* ---------- Custom cursor ---------- */
@@ -313,8 +346,8 @@
   var mapEl = document.getElementById('map');
   if (mapEl && window.L) {
     var L = window.L;
-    // Approximate — verify against Google Maps before launch.
-    var CLINIC = [43.6470, -79.6230]; // 5160 Explorer Dr, Mississauga
+    // Exact 5160 Explorer Dr, Unit 9 building location, verified against Google Maps.
+    var CLINIC = [43.6616286, -79.5987169];
     var map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true }).setView(CLINIC, 14);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19
@@ -327,8 +360,8 @@
     L.marker(CLINIC, { icon: pin, title: 'VS Physiotherapy & Rehabilitation Centre' }).addTo(map)
       .bindPopup('<b>VS Physio &amp; Rehab</b><br>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7<br><small>Free on-site parking</small>');
 
-    mapEl.addEventListener('click', function () { map.scrollWheelZoom.enable(); });
-    map.on('mouseout', function () { map.scrollWheelZoom.disable(); });
+     /* Keep wheel zoom disabled so the map cannot trap page scrolling.
+       Keyboard and on-map +/− controls remain available. */
   }
 
   /* ---------- Year ---------- */
@@ -348,12 +381,26 @@
   /* ---------- Form validation ---------- */
   document.querySelectorAll('form[data-validate]').forEach(function (form) {
     var done = form.querySelector('.done');
+    form.noValidate = true;
+
+    form.querySelectorAll('.f').forEach(function (wrap, index) {
+      var input = wrap.querySelector('input, select, textarea');
+      var error = wrap.querySelector('.err');
+      if (!input || !error) return;
+      if (!error.id) error.id = 'field-error-' + (index + 1);
+      input.setAttribute('aria-describedby', error.id);
+    });
 
     var check = function (input) {
       var wrap = input.closest('.f');
       if (!wrap) return true;
       var ok = input.value.trim() !== '' && input.checkValidity();
+      if (input.type === 'tel') {
+        var digits = input.value.replace(/\D/g, '');
+        ok = ok && digits.length >= 10 && digits.length <= 15;
+      }
       wrap.classList.toggle('bad', !ok);
+      input.setAttribute('aria-invalid', ok ? 'false' : 'true');
       return ok;
     };
 
@@ -397,8 +444,8 @@
         done.setAttribute('tabindex', '-1');
         done.focus();
       }
-      form.reset();
-      form.querySelectorAll('.f.bad').forEach(function (w) { w.classList.remove('bad'); });
+      /* Keep the entered values available in case the visitor cancels the
+         mail-client prompt or needs to copy the request manually. */
     });
   });
 })();

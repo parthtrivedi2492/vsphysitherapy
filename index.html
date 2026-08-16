@@ -28,8 +28,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260814-11">
-<script>document.documentElement.classList.add('has-js');</script>
+<link rel="stylesheet" href="assets/css/styles.css?v=20260816-01">
+<script>document.documentElement.classList.add('has-js');setTimeout(function(){document.documentElement.classList.add('anim-ready')},3000);</script>
 
 <script type="application/ld+json">
 {
@@ -64,6 +64,7 @@
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-dot" aria-hidden="true"></div>
@@ -107,7 +108,7 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero">
@@ -339,16 +340,16 @@
       </ul>
 
       <ul class="info" style="margin-top:2.4rem">
-        <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</span></span></li>
+        <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</span><br><a class="tlink" href="https://www.google.com/maps/dir/?api=1&amp;destination=5160+Explorer+Dr%2C+Unit+9%2C+Mississauga%2C+ON+L4W+4T7" target="_blank" rel="noopener">Get directions <i data-lucide="arrow-up-right"></i></a></span></li>
         <li><span class="ic"><i data-lucide="phone"></i></span><span><b>Phone</b><a href="tel:+14168586014">(416) 858-6014</a></span></li>
         <li><span class="ic"><i data-lucide="mail"></i></span><span><b>Email</b><a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a></span></li>
-        <li><span class="ic"><i data-lucide="clock"></i></span><span><b>Right now</b><span class="openflag" data-openflag><span class="d"></span><span data-openflag-text>Checking hours…</span></span></span></li>
+        <li><span class="ic"><i data-lucide="clock"></i></span><span><b>Clinic hours</b><span class="openflag" data-openflag><span class="d"></span><span data-openflag-text>Mon–Fri 10–7 · Sat 10–4</span></span></span></li>
       </ul>
     </div>
 
     <div data-anim="up" data-delay="0.1">
-      <div id="map" role="img" aria-label="Map showing VS Physiotherapy and Rehabilitation Centre at 5160 Explorer Drive, Mississauga"></div>
-      <p class="tiny" style="margin-top:.9rem;font-family:var(--mono);letter-spacing:.08em">Click the map to enable zoom</p>
+      <div id="map" role="region" aria-label="Interactive map showing VS Physiotherapy and Rehabilitation Centre at 5160 Explorer Drive, Mississauga"></div>
+      <p class="tiny" style="margin-top:.9rem;font-family:var(--mono);letter-spacing:.08em">Use the map controls to zoom, or open the directions link.</p>
     </div>
   </div>
 </section>
@@ -480,7 +481,7 @@
   </div>
 </footer>
 
-<div class="bookbar">
+<div class="bookbar" role="navigation" aria-label="Quick booking">
   <a class="btn btn--ghost" href="tel:+14168586014"><i data-lucide="phone"></i> Call</a>
   <a class="btn" href="contact.html#book">Book appointment</a>
 </div>
@@ -491,6 +492,6 @@
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/js/main.js?v=20260814-11"></script>
+<script src="assets/js/main.js?v=20260816-01"></script>
 </body>
 </html>

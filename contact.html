@@ -24,10 +24,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260814-11">
-<script>document.documentElement.classList.add('has-js');</script>
+<link rel="stylesheet" href="assets/css/styles.css?v=20260816-01">
+<script>document.documentElement.classList.add('has-js');setTimeout(function(){document.documentElement.classList.add('anim-ready')},3000);</script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-dot" aria-hidden="true"></div>
@@ -71,14 +72,14 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <section class="phero">
   <div class="wrap">
     <p class="crumb"><a href="index.html">Home</a> — Contact</p>
     <h1>Book your appointment</h1>
     <p class="lead">Send a request and we'll confirm within one business day. Prefer to talk? Call any time we're open.</p>
-    <p class="openflag" data-openflag style="margin-top:1.4rem"><span class="d"></span><span data-openflag-text>Checking hours…</span></p>
+    <p class="openflag" data-openflag style="margin-top:1.4rem"><span class="d"></span><span data-openflag-text>Mon–Fri 10–7 · Sat 10–4</span></p>
   </div>
 </section>
 
@@ -86,10 +87,10 @@
   <div class="wrap split" style="align-items:start">
 
     <div data-anim="up">
-      <form class="panel" data-validate data-email="connectvsphysio@gmail.com" novalidate>
-        <div class="done" role="status">
-          <b>Your email request is ready.</b>
-          Your email app should open with the details filled in. Review it and press Send. If it does not open, email <a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a>.
+      <form class="panel" data-validate data-email="connectvsphysio@gmail.com" action="mailto:connectvsphysio@gmail.com" method="post" enctype="text/plain">
+        <div class="done" role="status" aria-live="polite">
+          <b>Your email draft is prepared.</b>
+          Your email app should open with the details filled in. Review it and press Send. Your entries remain below in case the app does not open; you can also email <a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a>.
         </div>
 
         <p class="label">Appointment request</p>
@@ -144,8 +145,8 @@
         </div>
 
         <div class="f">
-          <label>Preferred time of day</label>
-          <div class="pills">
+          <label id="preferred-time-label">Preferred time of day</label>
+          <div class="pills" role="group" aria-labelledby="preferred-time-label">
             <input type="radio" id="t1" name="slot" value="morning"><label for="t1">Morning</label>
             <input type="radio" id="t2" name="slot" value="midday"><label for="t2">Midday</label>
             <input type="radio" id="t3" name="slot" value="afternoon"><label for="t3">Afternoon</label>
@@ -170,7 +171,7 @@
           <textarea id="msg" name="message" placeholder="Where it hurts and how long it's been going on."></textarea>
         </div>
 
-        <button class="btn btn--lg btn--block" type="submit" data-magnetic>Prepare email request</button>
+        <button class="btn btn--lg btn--block" type="submit" data-magnetic>Prepare email draft</button>
         <p class="tiny" style="margin-top:1rem">Submitting opens your email app; you must press Send to deliver the request. Please don't include sensitive medical details here.</p>
       </form>
     </div>
@@ -182,7 +183,7 @@
       <p style="margin-top:1.1rem">Unit 9, in the Airport Corporate Centre. Free parking right outside and step-free access from the lot.</p>
 
       <ul class="info" style="margin-top:2rem">
-        <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</span></span></li>
+        <li><span class="ic"><i data-lucide="map-pin"></i></span><span><b>Address</b><span>5160 Explorer Dr, Unit 9<br>Mississauga, ON L4W 4T7</span><br><a class="tlink" href="https://www.google.com/maps/dir/?api=1&amp;destination=5160+Explorer+Dr%2C+Unit+9%2C+Mississauga%2C+ON+L4W+4T7" target="_blank" rel="noopener">Get directions <i data-lucide="arrow-up-right"></i></a></span></li>
         <li><span class="ic"><i data-lucide="phone"></i></span><span><b>Phone</b><a href="tel:+14168586014">(416) 858-6014</a></span></li>
         <li><span class="ic"><i data-lucide="mail"></i></span><span><b>Email</b><a href="mailto:connectvsphysio@gmail.com">connectvsphysio@gmail.com</a></span></li>
         <li><span class="ic"><i data-lucide="globe-2"></i></span><span><b>Website</b><a href="https://vsphysio.ca">vsphysio.ca</a></span></li>
@@ -202,8 +203,8 @@
         </table>
       </div>
 
-      <div id="map" class="mapbox--contact" style="margin-top:2rem" role="img" aria-label="Map showing VS Physiotherapy and Rehabilitation Centre at 5160 Explorer Drive, Mississauga"></div>
-      <p class="tiny" style="margin-top:.8rem;font-family:var(--mono);letter-spacing:.06em">Click the map to enable zoom</p>
+      <div id="map" class="mapbox--contact" style="margin-top:2rem" role="region" aria-label="Interactive map showing VS Physiotherapy and Rehabilitation Centre at 5160 Explorer Drive, Mississauga"></div>
+      <p class="tiny" style="margin-top:.8rem;font-family:var(--mono);letter-spacing:.06em">Use the map controls to zoom, or open the directions link.</p>
     </div>
   </div>
 </section>
@@ -273,7 +274,7 @@
   </div>
 </footer>
 
-<div class="bookbar">
+<div class="bookbar" role="navigation" aria-label="Quick booking">
   <a class="btn btn--ghost" href="tel:+14168586014"><i data-lucide="phone"></i> Call</a>
   <a class="btn" href="#book">Book appointment</a>
 </div>
@@ -284,6 +285,6 @@
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/js/main.js?v=20260814-11"></script>
+<script src="assets/js/main.js?v=20260816-01"></script>
 </body>
 </html>

@@ -23,10 +23,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260814-11">
-<script>document.documentElement.classList.add('has-js');</script>
+<link rel="stylesheet" href="assets/css/styles.css?v=20260816-01">
+<script>document.documentElement.classList.add('has-js');setTimeout(function(){document.documentElement.classList.add('anim-ready')},3000);</script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-dot" aria-hidden="true"></div>
@@ -70,7 +71,7 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <section class="phero">
   <div class="wrap">
@@ -319,7 +320,7 @@
   </div>
 </footer>
 
-<div class="bookbar">
+<div class="bookbar" role="navigation" aria-label="Quick booking">
   <a class="btn btn--ghost" href="tel:+14168586014"><i data-lucide="phone"></i> Call</a>
   <a class="btn" href="contact.html#book">Book appointment</a>
 </div>
@@ -329,6 +330,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="https://unpkg.com/lucide@0.451.0/dist/umd/lucide.min.js"></script>
-<script src="assets/js/main.js?v=20260814-11"></script>
+<script src="assets/js/main.js?v=20260816-01"></script>
 </body>
 </html>
